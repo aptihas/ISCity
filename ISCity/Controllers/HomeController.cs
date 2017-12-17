@@ -6,9 +6,10 @@ using System.Web.Mvc;
 
 namespace ISCity.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
-        // GET: Home
+        // Просто главная строница
         public ActionResult Index()
         {
             return View();
