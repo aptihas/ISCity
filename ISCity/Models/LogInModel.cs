@@ -13,6 +13,7 @@ namespace ISCity.Models
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Введите Пароль")]
+        [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
     }

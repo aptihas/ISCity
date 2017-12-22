@@ -5,13 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3c81f1f424e04feba0ece06614458aef" Name="Diagram1">
-        <EntityTypeShape EntityType="DBISCityModel.Accounts" Width="1.5" PointX="2.625" PointY="6" />
-        <EntityTypeShape EntityType="DBISCityModel.Roles" Width="1.5" PointX="6.875" PointY="4.5" />
-        <EntityTypeShape EntityType="DBISCityModel.UserRoles" Width="1.5" PointX="5.375" PointY="1.75" />
-        <EntityTypeShape EntityType="DBISCityModel.Users" Width="1.5" PointX="2.625" PointY="1.5" />
-        <AssociationConnector Association="DBISCityModel.FK_Accounts_Accounts" />
+        <EntityTypeShape EntityType="DBISCityModel.Accounts" Width="1.5" PointX="7.625" PointY="2.25" />
+        <EntityTypeShape EntityType="DBISCityModel.ManageCompany" Width="1.5" PointX="0.75" PointY="3.5" />
+        <EntityTypeShape EntityType="DBISCityModel.Roles" Width="1.5" PointX="3" PointY="4.875" />
+        <EntityTypeShape EntityType="DBISCityModel.SubCompany" Width="1.5" PointX="0.625" PointY="0.875" />
+        <EntityTypeShape EntityType="DBISCityModel.UserRoles" Width="1.5" PointX="5.375" PointY="6" />
+        <EntityTypeShape EntityType="DBISCityModel.Users" Width="1.5" PointX="5.25" PointY="1.125" />
         <AssociationConnector Association="DBISCityModel.FK_Accounts_Users" />
+        <AssociationConnector Association="DBISCityModel.FK_SubCompany_ManageCompany" />
+        <AssociationConnector Association="DBISCityModel.FK_Users_ManageCompany" />
         <AssociationConnector Association="DBISCityModel.FK_UserRoles_Roles" />
+        <AssociationConnector Association="DBISCityModel.FK_Users_SubCompany" />
         <AssociationConnector Association="DBISCityModel.FK_UserRoles_Users" />
       </Diagram>
     </edmx:Diagrams>

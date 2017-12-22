@@ -7,20 +7,30 @@
     <Schema Namespace="DBISCityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="DBISCityModelStoreContainer">
     <EntitySet Name="Accounts" EntityType="DBISCityModel.Store.Accounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ManageCompany" EntityType="DBISCityModel.Store.ManageCompany" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Roles" EntityType="DBISCityModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SubCompany" EntityType="DBISCityModel.Store.SubCompany" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserRoles" EntityType="DBISCityModel.Store.UserRoles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="DBISCityModel.Store.Users" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_Accounts_Accounts" Association="DBISCityModel.Store.FK_Accounts_Accounts">
-      <End Role="Accounts" EntitySet="Accounts" />
-      <End Role="Accounts1" EntitySet="Accounts" />
-    </AssociationSet>
     <AssociationSet Name="FK_Accounts_Users" Association="DBISCityModel.Store.FK_Accounts_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="Accounts" EntitySet="Accounts" />
     </AssociationSet>
+    <AssociationSet Name="FK_SubCompany_ManageCompany" Association="DBISCityModel.Store.FK_SubCompany_ManageCompany">
+      <End Role="ManageCompany" EntitySet="ManageCompany" />
+      <End Role="SubCompany" EntitySet="SubCompany" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_ManageCompany" Association="DBISCityModel.Store.FK_Users_ManageCompany">
+      <End Role="ManageCompany" EntitySet="ManageCompany" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
     <AssociationSet Name="FK_UserRoles_Roles" Association="DBISCityModel.Store.FK_UserRoles_Roles">
       <End Role="Roles" EntitySet="Roles" />
       <End Role="UserRoles" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_SubCompany" Association="DBISCityModel.Store.FK_Users_SubCompany">
+      <End Role="SubCompany" EntitySet="SubCompany" />
+      <End Role="Users" EntitySet="Users" />
     </AssociationSet>
     <AssociationSet Name="FK_UserRoles_Users" Association="DBISCityModel.Store.FK_UserRoles_Users">
       <End Role="Users" EntitySet="Users" />
@@ -35,12 +45,27 @@
     <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="password" Type="nvarchar" Nullable="false" MaxLength="50" />
   </EntityType>
+  <EntityType Name="ManageCompany">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
+  </EntityType>
   <EntityType Name="Roles">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="SubCompany">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mangeCompany_id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nchar" Nullable="true" MaxLength="10" />
   </EntityType>
   <EntityType Name="UserRoles">
     <Key>
@@ -65,19 +90,9 @@
     <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="EmailConfirm" Type="bit" Nullable="false" />
     <Property Name="Telephone" Type="nvarchar" Nullable="true" MaxLength="15" />
+    <Property Name="ManageCompany_ID" Type="int" Nullable="true" />
+    <Property Name="SubCompany_ID" Type="int" Nullable="true" />
   </EntityType>
-  <Association Name="FK_Accounts_Accounts">
-    <End Role="Accounts" Type="DBISCityModel.Store.Accounts" Multiplicity="1" />
-    <End Role="Accounts1" Type="DBISCityModel.Store.Accounts" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Accounts">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Accounts1">
-        <PropertyRef Name="id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Accounts_Users">
     <End Role="Users" Type="DBISCityModel.Store.Users" Multiplicity="1" />
     <End Role="Accounts" Type="DBISCityModel.Store.Accounts" Multiplicity="*" />
@@ -90,6 +105,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SubCompany_ManageCompany">
+    <End Role="ManageCompany" Type="DBISCityModel.Store.ManageCompany" Multiplicity="1" />
+    <End Role="SubCompany" Type="DBISCityModel.Store.SubCompany" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ManageCompany">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SubCompany">
+        <PropertyRef Name="mangeCompany_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_ManageCompany">
+    <End Role="ManageCompany" Type="DBISCityModel.Store.ManageCompany" Multiplicity="0..1" />
+    <End Role="Users" Type="DBISCityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ManageCompany">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="ManageCompany_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserRoles_Roles">
     <End Role="Roles" Type="DBISCityModel.Store.Roles" Multiplicity="1" />
     <End Role="UserRoles" Type="DBISCityModel.Store.UserRoles" Multiplicity="*" />
@@ -99,6 +138,18 @@
       </Principal>
       <Dependent Role="UserRoles">
         <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_SubCompany">
+    <End Role="SubCompany" Type="DBISCityModel.Store.SubCompany" Multiplicity="0..1" />
+    <End Role="Users" Type="DBISCityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCompany">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="SubCompany_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -120,20 +171,30 @@
       <Schema Namespace="DBISCityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DBISCityEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="DBISCityModel.Accounts" />
+          <EntitySet Name="ManageCompany" EntityType="DBISCityModel.ManageCompany" />
           <EntitySet Name="Roles" EntityType="DBISCityModel.Roles" />
+          <EntitySet Name="SubCompany" EntityType="DBISCityModel.SubCompany" />
           <EntitySet Name="UserRoles" EntityType="DBISCityModel.UserRoles" />
           <EntitySet Name="Users" EntityType="DBISCityModel.Users" />
-          <AssociationSet Name="FK_Accounts_Accounts" Association="DBISCityModel.FK_Accounts_Accounts">
-            <End Role="Accounts" EntitySet="Accounts" />
-            <End Role="Accounts1" EntitySet="Accounts" />
-          </AssociationSet>
           <AssociationSet Name="FK_Accounts_Users" Association="DBISCityModel.FK_Accounts_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Accounts" EntitySet="Accounts" />
           </AssociationSet>
+          <AssociationSet Name="FK_SubCompany_ManageCompany" Association="DBISCityModel.FK_SubCompany_ManageCompany">
+            <End Role="ManageCompany" EntitySet="ManageCompany" />
+            <End Role="SubCompany" EntitySet="SubCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_ManageCompany" Association="DBISCityModel.FK_Users_ManageCompany">
+            <End Role="ManageCompany" EntitySet="ManageCompany" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserRoles_Roles" Association="DBISCityModel.FK_UserRoles_Roles">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_SubCompany" Association="DBISCityModel.FK_Users_SubCompany">
+            <End Role="SubCompany" EntitySet="SubCompany" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRoles_Users" Association="DBISCityModel.FK_UserRoles_Users">
             <End Role="Users" EntitySet="Users" />
@@ -147,9 +208,16 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Accounts1" Relationship="DBISCityModel.FK_Accounts_Accounts" FromRole="Accounts" ToRole="Accounts1" />
-          <NavigationProperty Name="Accounts2" Relationship="DBISCityModel.FK_Accounts_Accounts" FromRole="Accounts1" ToRole="Accounts" />
           <NavigationProperty Name="Users" Relationship="DBISCityModel.FK_Accounts_Users" FromRole="Accounts" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="ManageCompany">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SubCompany" Relationship="DBISCityModel.FK_SubCompany_ManageCompany" FromRole="ManageCompany" ToRole="SubCompany" />
+          <NavigationProperty Name="Users" Relationship="DBISCityModel.FK_Users_ManageCompany" FromRole="ManageCompany" ToRole="Users" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -158,6 +226,16 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="UserRoles" Relationship="DBISCityModel.FK_UserRoles_Roles" FromRole="Roles" ToRole="UserRoles" />
+        </EntityType>
+        <EntityType Name="SubCompany">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mangeCompany_id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="ManageCompany" Relationship="DBISCityModel.FK_SubCompany_ManageCompany" FromRole="SubCompany" ToRole="ManageCompany" />
+          <NavigationProperty Name="Users" Relationship="DBISCityModel.FK_Users_SubCompany" FromRole="SubCompany" ToRole="Users" />
         </EntityType>
         <EntityType Name="UserRoles">
           <Key>
@@ -184,21 +262,13 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirm" Type="Boolean" Nullable="false" />
           <Property Name="Telephone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ManageCompany_ID" Type="Int32" />
+          <Property Name="SubCompany_ID" Type="Int32" />
           <NavigationProperty Name="Accounts" Relationship="DBISCityModel.FK_Accounts_Users" FromRole="Users" ToRole="Accounts" />
+          <NavigationProperty Name="ManageCompany" Relationship="DBISCityModel.FK_Users_ManageCompany" FromRole="Users" ToRole="ManageCompany" />
+          <NavigationProperty Name="SubCompany" Relationship="DBISCityModel.FK_Users_SubCompany" FromRole="Users" ToRole="SubCompany" />
           <NavigationProperty Name="UserRoles" Relationship="DBISCityModel.FK_UserRoles_Users" FromRole="Users" ToRole="UserRoles" />
         </EntityType>
-        <Association Name="FK_Accounts_Accounts">
-          <End Type="DBISCityModel.Accounts" Role="Accounts" Multiplicity="1" />
-          <End Type="DBISCityModel.Accounts" Role="Accounts1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Accounts">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Accounts1">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Accounts_Users">
           <End Type="DBISCityModel.Users" Role="Users" Multiplicity="1" />
           <End Type="DBISCityModel.Accounts" Role="Accounts" Multiplicity="*" />
@@ -211,6 +281,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SubCompany_ManageCompany">
+          <End Type="DBISCityModel.ManageCompany" Role="ManageCompany" Multiplicity="1" />
+          <End Type="DBISCityModel.SubCompany" Role="SubCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManageCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubCompany">
+              <PropertyRef Name="mangeCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_ManageCompany">
+          <End Type="DBISCityModel.ManageCompany" Role="ManageCompany" Multiplicity="0..1" />
+          <End Type="DBISCityModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManageCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ManageCompany_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRoles_Roles">
           <End Type="DBISCityModel.Roles" Role="Roles" Multiplicity="1" />
           <End Type="DBISCityModel.UserRoles" Role="UserRoles" Multiplicity="*" />
@@ -220,6 +314,18 @@
             </Principal>
             <Dependent Role="UserRoles">
               <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_SubCompany">
+          <End Type="DBISCityModel.SubCompany" Role="SubCompany" Multiplicity="0..1" />
+          <End Type="DBISCityModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="SubCompany_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -250,10 +356,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ManageCompany">
+      <EntityTypeMapping TypeName="IsTypeOf(DBISCityModel.ManageCompany)">
+        <MappingFragment StoreEntitySet="ManageCompany">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Roles">
       <EntityTypeMapping TypeName="IsTypeOf(DBISCityModel.Roles)">
         <MappingFragment StoreEntitySet="Roles">
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubCompany">
+      <EntityTypeMapping TypeName="IsTypeOf(DBISCityModel.SubCompany)">
+        <MappingFragment StoreEntitySet="SubCompany">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="mangeCompany_id" ColumnName="mangeCompany_id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -281,6 +404,8 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="EmailConfirm" ColumnName="EmailConfirm" />
           <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="ManageCompany_ID" ColumnName="ManageCompany_ID" />
+          <ScalarProperty Name="SubCompany_ID" ColumnName="SubCompany_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

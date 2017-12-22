@@ -32,9 +32,13 @@ namespace ISCity.Models
         public string Email { get; set; }
         public bool EmailConfirm { get; set; }
         public string Telephone { get; set; }
+        public Nullable<int> ManageCompany_ID { get; set; }
+        public Nullable<int> SubCompany_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accounts> Accounts { get; set; }
+        public virtual ManageCompany ManageCompany { get; set; }
+        public virtual SubCompany SubCompany { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRoles> UserRoles { get; set; }
     }

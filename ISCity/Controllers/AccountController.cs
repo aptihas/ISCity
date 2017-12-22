@@ -39,12 +39,13 @@ namespace ISCity.Controllers
                     var _usr = (from u in dbEnt.Users
                                 where u.id == _acc.user_id
                                 select u).FirstOrDefault();
+
                     if (_usr.EmailConfirm != true)
                     {
                         _usr.EmailConfirm = true;
                         dbEnt.SaveChanges();
                     }
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "User");
                 }
                 else
                 {
@@ -91,14 +92,17 @@ namespace ISCity.Controllers
             }
             try
             {
+                var _roleUserContains = (from r in dbEnt.Roles
+                                 where r.Name == "User"
+                                 select r).FirstOrDefault();
+                if (_roleUserContains == null)
+                {
+                    dbEnt.Roles.Add(new ISCity.Models.Roles { Name = "User" });
+                    dbEnt.SaveChanges();
+                }
                 var _roleUser = (from r in dbEnt.Roles
                                  where r.Name == "User"
                                  select r).FirstOrDefault();
-                if (_roleUser == null)
-                {
-                    dbEnt.Roles.Add(new ISCity.Models.Roles { Name = "User" });
-                }
-
                 dbEnt.Users.Add(_usr);
                 dbEnt.SaveChanges();
 

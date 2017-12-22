@@ -156,7 +156,9 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -180,8 +182,14 @@
       <DependentUpon>DBISCityModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\LogInModel.cs" />
+    <Compile Include="Models\ManageCompany.cs">
+      <DependentUpon>DBISCityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MyRoleAtribute.cs" />
     <Compile Include="Models\Roles.cs">
+      <DependentUpon>DBISCityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SubCompany.cs">
       <DependentUpon>DBISCityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRoles.cs">
@@ -199,11 +207,15 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contacts.cshtml" />
+    <Content Include="Views\Organization\Index.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

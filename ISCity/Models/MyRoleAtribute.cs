@@ -12,6 +12,7 @@ namespace ISCity.Models
     //довести до ума
     public class MyRoleAtribute : AuthorizeAttribute
     {
+        DBISCityEntities dbEnt = new DBISCityEntities();
 
         private string[] allowedUsers = new string[] { };
         private string[] allowedRoles = new string[] { };
@@ -37,7 +38,6 @@ namespace ISCity.Models
                     allowedRoles[i] = allowedRoles[i].Trim();
                 }
             }
-
             return httpContext.Request.IsAuthenticated &&
                  User(httpContext) && Role(httpContext);
         }
@@ -53,16 +53,28 @@ namespace ISCity.Models
 
         private bool Role(HttpContextBase httpContext)
         {
-            if (allowedRoles.Length > 0)
+            var _usr = dbEnt.Users.Where(u => u.Email == httpContext.User.Identity.Name).Select(s => s).FirstOrDefault();
+            if (_usr != null)
             {
-                for (int i = 0; i < allowedRoles.Length; i++)
+                var userRoles = from r in dbEnt.UserRoles
+                                where r.user_id == _usr.id
+                                select r.Roles.Name;
+
+                if (allowedRoles.Length > 0)
                 {
-                    if (httpContext.User.IsInRole(allowedRoles[i]))
-                        return true;
+                    for (int i = 0; i < allowedRoles.Length; i++)
+                    {
+                        if (userRoles.Contains(allowedRoles[i]))
+                            return true;
+                    }
+                    return false;
                 }
-                return false;
+                return true;
             }
-            return true;
+            else
+            {
+                return true;
+            }
         }
     }
 }

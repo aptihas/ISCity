@@ -1,17 +1,38 @@
 ﻿
 @if (Request.IsAuthenticated)
 {
-    ISCity.Models.DBISCityEntities _db= new ISCity.Models.DBISCityEntities();
-    var _acc = (from a in _db.Accounts where a.Users.Email==User.Identity.Name select a.Users).FirstOrDefault();
+
+    ISCity.Models.DBISCityEntities dbEnt = new ISCity.Models.DBISCityEntities();
+    var _acc = (from a in dbEnt.Accounts where a.Users.Email==User.Identity.Name select a.Users).FirstOrDefault();
+
+    var userRoles = from r in dbEnt.UserRoles
+                    where r.user_id == _acc.id
+                    select r.Roles.Name;
 
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Здравствуйте, " + _acc.SecondName +" "+_acc?.ThirdName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
+            <li><a>Здравствуйте, @_acc.SecondName.</a></li>
+            @if (userRoles.Contains("Admin"))
+            {
+                <li>
+                    @Html.ActionLink("Панель администратора", "Index", "Admin", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+            }
+            @if (userRoles.Contains("Organization"))
+            {
+                <li>
+                    @Html.ActionLink("Панель организации", "Index", "Organization", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+            }
+            @if (userRoles.Contains("User"))
+            {
+                <li>
+                    @Html.ActionLink("Личный кабинет", "Index", "User", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+            }
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
         </ul>
     }

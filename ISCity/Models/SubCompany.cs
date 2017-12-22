@@ -12,12 +12,20 @@ namespace ISCity.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Accounts
+    public partial class SubCompany
     {
-        public int id { get; set; }
-        public int user_id { get; set; }
-        public string password { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SubCompany()
+        {
+            this.Users = new HashSet<Users>();
+        }
     
-        public virtual Users Users { get; set; }
+        public int id { get; set; }
+        public int mangeCompany_id { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ManageCompany ManageCompany { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users> Users { get; set; }
     }
 }
