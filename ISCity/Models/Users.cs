@@ -30,6 +30,7 @@ namespace ISCity.Models
         public string KorpusNumber { get; set; }
         public string RoomNumber { get; set; }
         public string Email { get; set; }
+        public bool EmailConfirm { get; set; }
         public string Telephone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -16,9 +16,10 @@ namespace ISCity.Models
     {
         public int id { get; set; }
         public int user_id { get; set; }
-        public string login { get; set; }
         public string password { get; set; }
     
+        public virtual Accounts Accounts1 { get; set; }
+        public virtual Accounts Accounts2 { get; set; }
         public virtual Users Users { get; set; }
     }
 }
