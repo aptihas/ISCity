@@ -45,11 +45,11 @@ namespace ISCity.Controllers
                         _usr.EmailConfirm = true;
                         dbEnt.SaveChanges();
                     }
-                    if (_usr.mc_user_id != null)
+                    if (_usr.manageCompany_id != null)
                     {
                         return RedirectToAction("Index", "User");
                     }
-                    else if(_usr.sc_user_id!=null)
+                    else if(_usr.subCompany_id!=null)
                     {
                         return RedirectToAction("Index", "User");
                     }
