@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ISCity.Models.UserRequests>
+
+@{
+    ViewBag.Title = "MyRequestList";
+    ISCity.Models.DBISCityEntities dbEnt = new ISCity.Models.DBISCityEntities();
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int number = 1;
+}
+
+<h2>Мои заявки</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            №
+        </th>
+        <th>
+            Категория
+        </th>
+        <th>
+            Дата заявки
+        </th>
+        <th>
+            Ресурсоснабжающая компания
+        </th>
+        <th>
+            Управляющая компания
+        </th>
+        <th>
+            Статус
+        </th>
+        <th>
+            Оценка
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @number
+        </td>
+        <td>
+            @item.ManageCompany.Category
+        </td>
+        <td>
+            @item.DateOfCreate.ToShortDateString()
+        </td>
+        <td>
+            @item.ManageCompany.Name
+        </td>
+        <td>
+            @{string subCompany = item.subCompany_id!=null ? item.SubCompany.Name : "Еще не назначена"; }
+            @subCompany
+        </td>
+        <td>
+            @{string status = item.Closed ? "Закрыта" : "Открыта"; }
+            @status
+        </td>
+        <td>
+            @{
+                var _markObj = dbEnt.RequestsMark.Where(rm => rm.userRequest_id == item.id).Select(rm => rm).FirstOrDefault();
+                string mark = _markObj?.Mark != null ? _markObj?.Mark + " из 5" : "Не оценена";
+            }
+            @mark
+        </td>
+        <td>
+            @{string _closed = item.Closed ? "Открыть заявку" : "Закрыть заявку"; }
+
+            @if (item.Closed)
+            {
+                @Html.ActionLink("Открыть заявку", "OpenMyRequest", new { id = item.id })<br />
+                if (!(_markObj != null && _markObj?.Mark != null))
+                {
+                    @Html.ActionLink("Оценить", "AddMark", new { id = item.id })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Закрыть заявку", "CloseMyRequest", new { id = item.id })
+            }
+        </td>
+    </tr>
+}
+</table>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ISCity.Models
 {
@@ -88,5 +89,11 @@ namespace ISCity.Models
         [Required(ErrorMessage = "Введите номер здания организации.")]
         [Display(Name = "Дом")]
         public string HouseNumber { get; set; }
+    }
+
+    public class UserRequestModel
+    {
+        public int Category { get; set; }
+        public string Message { get; set; }
     }
 }

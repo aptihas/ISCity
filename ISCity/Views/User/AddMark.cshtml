@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "AddMark";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int request_id = ViewBag.RequestId;
+}
+
+<h2>Оценка заявки</h2>
+@using (Html.BeginForm())
+{
+    @Html.Hidden("id", request_id)
+    @Html.RadioButton("mark", "1")<span>Ужасно</span> <br />
+    @Html.RadioButton("mark", "2")<span>Плохо</span> <br />
+    @Html.RadioButton("mark", "3")<span>Нормально</span> <br />
+    @Html.RadioButton("mark", "4")<span>Хорошо</span> <br />
+    @Html.RadioButton("mark", "5",true)<span>Отлично</span> <br />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Оценить" class="btn btn-default" />
+        </div>
+    </div>
+}

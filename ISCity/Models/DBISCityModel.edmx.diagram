@@ -5,24 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3c81f1f424e04feba0ece06614458aef" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="DBISCityModel.Accounts" Width="1.5" PointX="7.5" PointY="12.375" />
-        <EntityTypeShape EntityType="DBISCityModel.ManageCompany" Width="1.5" PointX="0.75" PointY="5.625" />
-        <EntityTypeShape EntityType="DBISCityModel.RequestsMark" Width="1.5" PointX="12.75" PointY="6" />
-        <EntityTypeShape EntityType="DBISCityModel.Roles" Width="1.5" PointX="5.25" PointY="2" />
-        <EntityTypeShape EntityType="DBISCityModel.SubCompany" Width="1.5" PointX="3" PointY="5.625" />
-        <EntityTypeShape EntityType="DBISCityModel.SubCompanyTasks" Width="1.5" PointX="8.25" PointY="5.875" />
-        <EntityTypeShape EntityType="DBISCityModel.UserRequests" Width="1.5" PointX="10.5" PointY="5.375" />
-        <EntityTypeShape EntityType="DBISCityModel.UserRoles" Width="1.5" PointX="7.5" PointY="2.875" />
-        <EntityTypeShape EntityType="DBISCityModel.Users" Width="1.5" PointX="5.25" PointY="4.625" />
+        <EntityTypeShape EntityType="DBISCityModel.Accounts" Width="1.5" PointX="3.25" PointY="4.5" />
+        <EntityTypeShape EntityType="DBISCityModel.ManageCompany" Width="1.5" PointX="0.875" PointY="6.75" />
+        <EntityTypeShape EntityType="DBISCityModel.RequestsMark" Width="1.5" PointX="9.75" PointY="4.625" />
+        <EntityTypeShape EntityType="DBISCityModel.Roles" Width="1.5" PointX="8.25" PointY="0.75" />
+        <EntityTypeShape EntityType="DBISCityModel.SubCompany" Width="1.5" PointX="1.75" PointY="0.875" />
+        <EntityTypeShape EntityType="DBISCityModel.UserRequests" Width="1.5" PointX="7.5" PointY="4" />
+        <EntityTypeShape EntityType="DBISCityModel.UserRoles" Width="1.5" PointX="10.5" PointY="1.5" />
+        <EntityTypeShape EntityType="DBISCityModel.Users" Width="1.5" PointX="5.25" PointY="3.25" />
         <AssociationConnector Association="DBISCityModel.FK_Accounts_Users" />
         <AssociationConnector Association="DBISCityModel.FK_SubCompany_ManageCompany" />
         <AssociationConnector Association="DBISCityModel.FK_UserRrequests_ManageCompany" />
         <AssociationConnector Association="DBISCityModel.FK_Users_ManageCompany" />
         <AssociationConnector Association="DBISCityModel.FK_RequestsMark_UserRequests" />
         <AssociationConnector Association="DBISCityModel.FK_UserRoles_Roles" />
-        <AssociationConnector Association="DBISCityModel.FK_SubCompanyTasks_SubCompany" />
+        <AssociationConnector Association="DBISCityModel.FK_UserRequests_SubCompany" />
         <AssociationConnector Association="DBISCityModel.FK_Users_SubCompany" />
-        <AssociationConnector Association="DBISCityModel.FK_SubCompanyTasks_UserRequests" />
         <AssociationConnector Association="DBISCityModel.FK_UserRrequests_Users" />
         <AssociationConnector Association="DBISCityModel.FK_UserRoles_Users" />
       </Diagram>

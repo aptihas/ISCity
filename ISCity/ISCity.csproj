@@ -197,9 +197,6 @@
     <Compile Include="Models\SubCompany.cs">
       <DependentUpon>DBISCityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SubCompanyTasks.cs">
-      <DependentUpon>DBISCityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UserRequests.cs">
       <DependentUpon>DBISCityModel.tt</DependentUpon>
     </Compile>
@@ -233,6 +230,9 @@
     <Content Include="Views\ManageCompany\Index.cshtml" />
     <Content Include="Views\SubCompany\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutUser.cshtml" />
+    <Content Include="Views\User\NewRequest.cshtml" />
+    <Content Include="Views\User\MyRequestList.cshtml" />
+    <Content Include="Views\User\AddMark.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

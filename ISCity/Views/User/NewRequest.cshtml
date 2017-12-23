@@ -1,0 +1,42 @@
+﻿@model ISCity.Models.UserRequestModel
+
+@{
+    ViewBag.Title = "NewRequest";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ISCity.Models.DBISCityEntities dbEnt = new ISCity.Models.DBISCityEntities();
+
+    var _categoryes = dbEnt.ManageCompany.Select(m => m);
+    SelectList categoryList = new SelectList(_categoryes,"id","Category");
+}
+
+<h2>Новая заявка</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category,"Категория", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Category, categoryList)
+                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Message,"Текст заявки", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Message,10,100, new {  @class = "form-control", @placeholder = "Максимально подробно опишите проблему" })
+                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Отправить заявку" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
