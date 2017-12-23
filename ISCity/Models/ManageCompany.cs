@@ -25,6 +25,8 @@ namespace ISCity.Models
         public int id { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
+        public string Street { get; set; }
+        public string HouseNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubCompany> SubCompany { get; set; }

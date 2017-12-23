@@ -40,18 +40,27 @@ namespace ISCity.Controllers
                                 where u.id == _acc.user_id
                                 select u).FirstOrDefault();
 
+                    var _usrRoles = dbEnt.UserRoles.Where(r => r.user_id == _usr.id).Select(s => s.Roles.Name);
+
                     if (_usr.EmailConfirm != true)
                     {
                         _usr.EmailConfirm = true;
                         dbEnt.SaveChanges();
                     }
-                    if (_usr.manageCompany_id != null)
+
+
+
+                    if (_usrRoles.Contains("ManageCompany"))
                     {
-                        return RedirectToAction("Index", "User");
+                        return RedirectToAction("Index", "ManageCompany");
                     }
-                    else if(_usr.subCompany_id!=null)
+                    else if(_usrRoles.Contains("SubCompany"))
                     {
-                        return RedirectToAction("Index", "User");
+                        return RedirectToAction("Index", "SubCompany");
+                    }
+                    else if (_usrRoles.Contains("Admin"))
+                    {
+                        return RedirectToAction("Index", "Admin");
                     }
                     else
                     {
@@ -117,15 +126,12 @@ namespace ISCity.Controllers
                 dbEnt.Users.Add(_usr);
                 dbEnt.SaveChanges();
 
-
-
                 dbEnt.UserRoles.Add(new UserRoles { user_id = _usr.id, role_id = _roleUser.id });
                 dbEnt.SaveChanges();
 
-
-                dbEnt.Accounts.Add(new Accounts { password = GetPass(), user_id = _usr.id });
+                dbEnt.Accounts.Add(new Accounts { password = ISCityFramework.GetPass(rnd), user_id = _usr.id });
                 dbEnt.SaveChanges();
-                SendMail(_usr);
+                ISCityFramework.SendMail(_usr,dbEnt);
                 return RedirectToAction("Index", "User");
             }
             catch
@@ -151,56 +157,6 @@ namespace ISCity.Controllers
 
             //нужно добавить подтверждение emaila
 
-        }
-
-        private void SendMail(Users user)
-        {
-            string _pass = dbEnt.Accounts.Where(a => a.user_id == user.id).Select(a=>a.password).FirstOrDefault();
-            // отправитель - устанавливаем адрес и отображаемое в письме имя
-            MailAddress from = new MailAddress("otdel_rsis@mail.ru", "ИС \"Грозный\"");
-            // кому отправляем
-            MailAddress to = new MailAddress(user.Email);
-            // создаем объект сообщения
-            MailMessage m = new MailMessage(from, to);
-            // тема письма
-            m.Subject = "Подтверждение Email";
-            // текст письма
-            m.Body = "<h2>Здравствуйте, "+user.SecondName+ "!</h2><h4>Ваши учетные данные от системы ИС Грозный</h4><p>Логин:" + user.Email+"<br>Пароль:" + _pass+"<br/><br/>Пока вы не выполните вход, Ваш Email не будет подтвержден.</p>";
-            // письмо представляет код html
-            m.IsBodyHtml = true;
-            // адрес smtp-сервера и порт, с которого будем отправлять письмо
-            SmtpClient smtp = new SmtpClient("smtp.mail.ru", 25);
-            // логин и пароль
-            smtp.Credentials = new NetworkCredential("otdel_rsis@mail.ru", "razrab0tka");
-            smtp.EnableSsl = true;
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.Send(m);
-        }
-
-        private string GetPass()
-        {
-            int[] arr = new int[16]; // сделаем длину пароля в 16 символов
-            string Password = "";
-
-            for (int i = 0; i < arr.Length; i++)
-            {
-                arr[i] = rnd.Next(33, 125);
-                Password += (char)arr[i];
-            }
-            return Password;
-        }
-
-        private string GetLogin()
-        {
-            int[] arr = new int[8]; // сделаем длину пароля в 16 символов
-            string Password = "";
-
-            for (int i = 0; i < arr.Length; i++)
-            {
-                arr[i] = rnd.Next(33, 125);
-                Password += (char)arr[i];
-            }
-            return Password;
         }
 
     }
