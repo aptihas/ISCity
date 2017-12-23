@@ -17,6 +17,7 @@ namespace ISCity.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SubCompany()
         {
+            this.SubCompanyTasks = new HashSet<SubCompanyTasks>();
             this.Users = new HashSet<Users>();
         }
     
@@ -25,6 +26,8 @@ namespace ISCity.Models
         public string Name { get; set; }
     
         public virtual ManageCompany ManageCompany { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubCompanyTasks> SubCompanyTasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Users> Users { get; set; }
     }

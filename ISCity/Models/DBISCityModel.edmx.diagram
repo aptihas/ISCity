@@ -4,18 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3c81f1f424e04feba0ece06614458aef" Name="Diagram1">
-        <EntityTypeShape EntityType="DBISCityModel.Accounts" Width="1.5" PointX="7.625" PointY="2.25" />
-        <EntityTypeShape EntityType="DBISCityModel.ManageCompany" Width="1.5" PointX="0.75" PointY="3.5" />
-        <EntityTypeShape EntityType="DBISCityModel.Roles" Width="1.5" PointX="3" PointY="4.875" />
-        <EntityTypeShape EntityType="DBISCityModel.SubCompany" Width="1.5" PointX="0.625" PointY="0.875" />
-        <EntityTypeShape EntityType="DBISCityModel.UserRoles" Width="1.5" PointX="5.375" PointY="6" />
-        <EntityTypeShape EntityType="DBISCityModel.Users" Width="1.5" PointX="5.25" PointY="1.125" />
+      <Diagram DiagramId="3c81f1f424e04feba0ece06614458aef" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="DBISCityModel.Accounts" Width="1.5" PointX="12.625" PointY="1.75" />
+        <EntityTypeShape EntityType="DBISCityModel.ManageCompany" Width="1.5" PointX="2.375" PointY="1.25" />
+        <EntityTypeShape EntityType="DBISCityModel.RequestsMark" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="DBISCityModel.Roles" Width="1.5" PointX="14.625" PointY="4.5" />
+        <EntityTypeShape EntityType="DBISCityModel.SubCompany" Width="1.5" PointX="6.625" PointY="2.75" />
+        <EntityTypeShape EntityType="DBISCityModel.SubCompanyTasks" Width="1.5" PointX="4.25" PointY="3.25" />
+        <EntityTypeShape EntityType="DBISCityModel.UserRequests" Width="1.5" PointX="4.5" PointY="6.375" />
+        <EntityTypeShape EntityType="DBISCityModel.UserRoles" Width="1.5" PointX="12.5" PointY="4.125" />
+        <EntityTypeShape EntityType="DBISCityModel.Users" Width="1.5" PointX="9.875" PointY="1.375" />
         <AssociationConnector Association="DBISCityModel.FK_Accounts_Users" />
         <AssociationConnector Association="DBISCityModel.FK_SubCompany_ManageCompany" />
+        <AssociationConnector Association="DBISCityModel.FK_UserRrequests_ManageCompany" />
         <AssociationConnector Association="DBISCityModel.FK_Users_ManageCompany" />
+        <AssociationConnector Association="DBISCityModel.FK_RequestsMark_UserRequests" />
         <AssociationConnector Association="DBISCityModel.FK_UserRoles_Roles" />
+        <AssociationConnector Association="DBISCityModel.FK_SubCompanyTasks_SubCompany" />
         <AssociationConnector Association="DBISCityModel.FK_Users_SubCompany" />
+        <AssociationConnector Association="DBISCityModel.FK_SubCompanyTasks_UserRequests" />
+        <AssociationConnector Association="DBISCityModel.FK_UserRrequests_Users" ManuallyRouted="true" >
+          <ConnectorPoint PointX="9.875" PointY="2.3906274999999937" />
+          <ConnectorPoint PointX="5.90625" PointY="2.3906274999999937" />
+          <ConnectorPoint PointX="5.90625" PointY="6.375" />
+        </AssociationConnector>
         <AssociationConnector Association="DBISCityModel.FK_UserRoles_Users" />
       </Diagram>
     </edmx:Diagrams>

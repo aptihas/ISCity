@@ -4,176 +4,290 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DBISCityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="DBISCityModelStoreContainer">
-    <EntitySet Name="Accounts" EntityType="DBISCityModel.Store.Accounts" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ManageCompany" EntityType="DBISCityModel.Store.ManageCompany" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Roles" EntityType="DBISCityModel.Store.Roles" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SubCompany" EntityType="DBISCityModel.Store.SubCompany" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UserRoles" EntityType="DBISCityModel.Store.UserRoles" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Users" EntityType="DBISCityModel.Store.Users" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_Accounts_Users" Association="DBISCityModel.Store.FK_Accounts_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="Accounts" EntitySet="Accounts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SubCompany_ManageCompany" Association="DBISCityModel.Store.FK_SubCompany_ManageCompany">
-      <End Role="ManageCompany" EntitySet="ManageCompany" />
-      <End Role="SubCompany" EntitySet="SubCompany" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Users_ManageCompany" Association="DBISCityModel.Store.FK_Users_ManageCompany">
-      <End Role="ManageCompany" EntitySet="ManageCompany" />
-      <End Role="Users" EntitySet="Users" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserRoles_Roles" Association="DBISCityModel.Store.FK_UserRoles_Roles">
-      <End Role="Roles" EntitySet="Roles" />
-      <End Role="UserRoles" EntitySet="UserRoles" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Users_SubCompany" Association="DBISCityModel.Store.FK_Users_SubCompany">
-      <End Role="SubCompany" EntitySet="SubCompany" />
-      <End Role="Users" EntitySet="Users" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserRoles_Users" Association="DBISCityModel.Store.FK_UserRoles_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="UserRoles" EntitySet="UserRoles" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Accounts">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="user_id" Type="int" Nullable="false" />
-    <Property Name="password" Type="nvarchar" Nullable="false" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="ManageCompany">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
-  </EntityType>
-  <EntityType Name="Roles">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nchar" Nullable="false" MaxLength="20" />
-  </EntityType>
-  <EntityType Name="SubCompany">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="mangeCompany_id" Type="int" Nullable="false" />
-    <Property Name="Name" Type="nchar" Nullable="true" MaxLength="10" />
-  </EntityType>
-  <EntityType Name="UserRoles">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="user_id" Type="int" Nullable="false" />
-    <Property Name="role_id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Users">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="SecondName" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="ThirdName" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Street" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="HouseNumber" Type="nvarchar" Nullable="false" MaxLength="10" />
-    <Property Name="KorpusNumber" Type="nvarchar" Nullable="true" MaxLength="10" />
-    <Property Name="RoomNumber" Type="nvarchar" Nullable="true" MaxLength="10" />
-    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="EmailConfirm" Type="bit" Nullable="false" />
-    <Property Name="Telephone" Type="nvarchar" Nullable="true" MaxLength="15" />
-    <Property Name="ManageCompany_ID" Type="int" Nullable="true" />
-    <Property Name="SubCompany_ID" Type="int" Nullable="true" />
-  </EntityType>
-  <Association Name="FK_Accounts_Users">
-    <End Role="Users" Type="DBISCityModel.Store.Users" Multiplicity="1" />
-    <End Role="Accounts" Type="DBISCityModel.Store.Accounts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Accounts">
-        <PropertyRef Name="user_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SubCompany_ManageCompany">
-    <End Role="ManageCompany" Type="DBISCityModel.Store.ManageCompany" Multiplicity="1" />
-    <End Role="SubCompany" Type="DBISCityModel.Store.SubCompany" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ManageCompany">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="SubCompany">
-        <PropertyRef Name="mangeCompany_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Users_ManageCompany">
-    <End Role="ManageCompany" Type="DBISCityModel.Store.ManageCompany" Multiplicity="0..1" />
-    <End Role="Users" Type="DBISCityModel.Store.Users" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ManageCompany">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Users">
-        <PropertyRef Name="ManageCompany_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserRoles_Roles">
-    <End Role="Roles" Type="DBISCityModel.Store.Roles" Multiplicity="1" />
-    <End Role="UserRoles" Type="DBISCityModel.Store.UserRoles" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Roles">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="UserRoles">
-        <PropertyRef Name="role_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Users_SubCompany">
-    <End Role="SubCompany" Type="DBISCityModel.Store.SubCompany" Multiplicity="0..1" />
-    <End Role="Users" Type="DBISCityModel.Store.Users" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SubCompany">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Users">
-        <PropertyRef Name="SubCompany_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserRoles_Users">
-    <End Role="Users" Type="DBISCityModel.Store.Users" Multiplicity="1" />
-    <End Role="UserRoles" Type="DBISCityModel.Store.UserRoles" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="UserRoles">
-        <PropertyRef Name="user_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="DBISCityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ManageCompany">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestsMark">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userRequest_id" Type="int" Nullable="false" />
+          <Property Name="Mark" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubCompany">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mangeCompany_id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SubCompanyTasks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subCompany_id" Type="int" Nullable="false" />
+          <Property Name="userRequest_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRequests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="mangeCompany_id" Type="int" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DateOfCreate" Type="datetime" Nullable="false" />
+          <Property Name="Closed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="manageCompany_id" Type="int" />
+          <Property Name="subCompany_id" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SecondName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ThirdName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Street" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HouseNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="KorpusNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="RoomNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmailConfirm" Type="bit" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <Association Name="FK_Accounts_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestsMark_UserRequests">
+          <End Role="UserRequests" Type="Self.UserRequests" Multiplicity="1" />
+          <End Role="RequestsMark" Type="Self.RequestsMark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRequests">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RequestsMark">
+              <PropertyRef Name="userRequest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCompany_ManageCompany">
+          <End Role="ManageCompany" Type="Self.ManageCompany" Multiplicity="1" />
+          <End Role="SubCompany" Type="Self.SubCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManageCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubCompany">
+              <PropertyRef Name="mangeCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCompanyTasks_SubCompany">
+          <End Role="SubCompany" Type="Self.SubCompany" Multiplicity="1" />
+          <End Role="SubCompanyTasks" Type="Self.SubCompanyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubCompanyTasks">
+              <PropertyRef Name="subCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCompanyTasks_UserRequests">
+          <End Role="UserRequests" Type="Self.UserRequests" Multiplicity="1" />
+          <End Role="SubCompanyTasks" Type="Self.SubCompanyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRequests">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubCompanyTasks">
+              <PropertyRef Name="userRequest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRrequests_ManageCompany">
+          <End Role="ManageCompany" Type="Self.ManageCompany" Multiplicity="1" />
+          <End Role="UserRequests" Type="Self.UserRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManageCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRequests">
+              <PropertyRef Name="mangeCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRrequests_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserRequests" Type="Self.UserRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRequests">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_ManageCompany">
+          <End Role="ManageCompany" Type="Self.ManageCompany" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManageCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="manageCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_SubCompany">
+          <End Role="SubCompany" Type="Self.SubCompany" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="subCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBISCityModelStoreContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManageCompany" EntityType="Self.ManageCompany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestsMark" EntityType="Self.RequestsMark" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCompany" EntityType="Self.SubCompany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCompanyTasks" EntityType="Self.SubCompanyTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRequests" EntityType="Self.UserRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Accounts_Users" Association="Self.FK_Accounts_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestsMark_UserRequests" Association="Self.FK_RequestsMark_UserRequests">
+            <End Role="UserRequests" EntitySet="UserRequests" />
+            <End Role="RequestsMark" EntitySet="RequestsMark" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCompany_ManageCompany" Association="Self.FK_SubCompany_ManageCompany">
+            <End Role="ManageCompany" EntitySet="ManageCompany" />
+            <End Role="SubCompany" EntitySet="SubCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCompanyTasks_SubCompany" Association="Self.FK_SubCompanyTasks_SubCompany">
+            <End Role="SubCompany" EntitySet="SubCompany" />
+            <End Role="SubCompanyTasks" EntitySet="SubCompanyTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCompanyTasks_UserRequests" Association="Self.FK_SubCompanyTasks_UserRequests">
+            <End Role="UserRequests" EntitySet="UserRequests" />
+            <End Role="SubCompanyTasks" EntitySet="SubCompanyTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Roles" Association="Self.FK_UserRoles_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Users" Association="Self.FK_UserRoles_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRrequests_ManageCompany" Association="Self.FK_UserRrequests_ManageCompany">
+            <End Role="ManageCompany" EntitySet="ManageCompany" />
+            <End Role="UserRequests" EntitySet="UserRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRrequests_Users" Association="Self.FK_UserRrequests_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRequests" EntitySet="UserRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_ManageCompany" Association="Self.FK_Users_ManageCompany">
+            <End Role="ManageCompany" EntitySet="ManageCompany" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_SubCompany" Association="Self.FK_Users_SubCompany">
+            <End Role="SubCompany" EntitySet="SubCompany" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBISCityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DBISCityEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="DBISCityModel.Accounts" />
           <EntitySet Name="ManageCompany" EntityType="DBISCityModel.ManageCompany" />
+          <EntitySet Name="RequestsMark" EntityType="DBISCityModel.RequestsMark" />
           <EntitySet Name="Roles" EntityType="DBISCityModel.Roles" />
           <EntitySet Name="SubCompany" EntityType="DBISCityModel.SubCompany" />
+          <EntitySet Name="SubCompanyTasks" EntityType="DBISCityModel.SubCompanyTasks" />
+          <EntitySet Name="UserRequests" EntityType="DBISCityModel.UserRequests" />
           <EntitySet Name="UserRoles" EntityType="DBISCityModel.UserRoles" />
           <EntitySet Name="Users" EntityType="DBISCityModel.Users" />
           <AssociationSet Name="FK_Accounts_Users" Association="DBISCityModel.FK_Accounts_Users">
@@ -184,17 +298,37 @@
             <End Role="ManageCompany" EntitySet="ManageCompany" />
             <End Role="SubCompany" EntitySet="SubCompany" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserRrequests_ManageCompany" Association="DBISCityModel.FK_UserRrequests_ManageCompany">
+            <End Role="ManageCompany" EntitySet="ManageCompany" />
+            <End Role="UserRequests" EntitySet="UserRequests" />
+          </AssociationSet>
           <AssociationSet Name="FK_Users_ManageCompany" Association="DBISCityModel.FK_Users_ManageCompany">
             <End Role="ManageCompany" EntitySet="ManageCompany" />
             <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestsMark_UserRequests" Association="DBISCityModel.FK_RequestsMark_UserRequests">
+            <End Role="UserRequests" EntitySet="UserRequests" />
+            <End Role="RequestsMark" EntitySet="RequestsMark" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRoles_Roles" Association="DBISCityModel.FK_UserRoles_Roles">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_SubCompanyTasks_SubCompany" Association="DBISCityModel.FK_SubCompanyTasks_SubCompany">
+            <End Role="SubCompany" EntitySet="SubCompany" />
+            <End Role="SubCompanyTasks" EntitySet="SubCompanyTasks" />
+          </AssociationSet>
           <AssociationSet Name="FK_Users_SubCompany" Association="DBISCityModel.FK_Users_SubCompany">
             <End Role="SubCompany" EntitySet="SubCompany" />
             <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCompanyTasks_UserRequests" Association="DBISCityModel.FK_SubCompanyTasks_UserRequests">
+            <End Role="UserRequests" EntitySet="UserRequests" />
+            <End Role="SubCompanyTasks" EntitySet="SubCompanyTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRrequests_Users" Association="DBISCityModel.FK_UserRrequests_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRequests" EntitySet="UserRequests" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRoles_Users" Association="DBISCityModel.FK_UserRoles_Users">
             <End Role="Users" EntitySet="Users" />
@@ -216,8 +350,19 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SubCompany" Relationship="DBISCityModel.FK_SubCompany_ManageCompany" FromRole="ManageCompany" ToRole="SubCompany" />
+          <NavigationProperty Name="UserRequests" Relationship="DBISCityModel.FK_UserRrequests_ManageCompany" FromRole="ManageCompany" ToRole="UserRequests" />
           <NavigationProperty Name="Users" Relationship="DBISCityModel.FK_Users_ManageCompany" FromRole="ManageCompany" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="RequestsMark">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userRequest_id" Type="Int32" Nullable="false" />
+          <Property Name="Mark" Type="Int32" />
+          <NavigationProperty Name="UserRequests" Relationship="DBISCityModel.FK_RequestsMark_UserRequests" FromRole="RequestsMark" ToRole="UserRequests" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -235,7 +380,33 @@
           <Property Name="mangeCompany_id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="ManageCompany" Relationship="DBISCityModel.FK_SubCompany_ManageCompany" FromRole="SubCompany" ToRole="ManageCompany" />
+          <NavigationProperty Name="SubCompanyTasks" Relationship="DBISCityModel.FK_SubCompanyTasks_SubCompany" FromRole="SubCompany" ToRole="SubCompanyTasks" />
           <NavigationProperty Name="Users" Relationship="DBISCityModel.FK_Users_SubCompany" FromRole="SubCompany" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="SubCompanyTasks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subCompany_id" Type="Int32" Nullable="false" />
+          <Property Name="userRequest_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SubCompany" Relationship="DBISCityModel.FK_SubCompanyTasks_SubCompany" FromRole="SubCompanyTasks" ToRole="SubCompany" />
+          <NavigationProperty Name="UserRequests" Relationship="DBISCityModel.FK_SubCompanyTasks_UserRequests" FromRole="SubCompanyTasks" ToRole="UserRequests" />
+        </EntityType>
+        <EntityType Name="UserRequests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="mangeCompany_id" Type="Int32" Nullable="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Closed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ManageCompany" Relationship="DBISCityModel.FK_UserRrequests_ManageCompany" FromRole="UserRequests" ToRole="ManageCompany" />
+          <NavigationProperty Name="RequestsMark" Relationship="DBISCityModel.FK_RequestsMark_UserRequests" FromRole="UserRequests" ToRole="RequestsMark" />
+          <NavigationProperty Name="SubCompanyTasks" Relationship="DBISCityModel.FK_SubCompanyTasks_UserRequests" FromRole="UserRequests" ToRole="SubCompanyTasks" />
+          <NavigationProperty Name="Users" Relationship="DBISCityModel.FK_UserRrequests_Users" FromRole="UserRequests" ToRole="Users" />
         </EntityType>
         <EntityType Name="UserRoles">
           <Key>
@@ -252,6 +423,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="manageCompany_id" Type="Int32" />
+          <Property Name="subCompany_id" Type="Int32" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SecondName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ThirdName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -262,11 +435,10 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirm" Type="Boolean" Nullable="false" />
           <Property Name="Telephone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="ManageCompany_ID" Type="Int32" />
-          <Property Name="SubCompany_ID" Type="Int32" />
           <NavigationProperty Name="Accounts" Relationship="DBISCityModel.FK_Accounts_Users" FromRole="Users" ToRole="Accounts" />
           <NavigationProperty Name="ManageCompany" Relationship="DBISCityModel.FK_Users_ManageCompany" FromRole="Users" ToRole="ManageCompany" />
           <NavigationProperty Name="SubCompany" Relationship="DBISCityModel.FK_Users_SubCompany" FromRole="Users" ToRole="SubCompany" />
+          <NavigationProperty Name="UserRequests" Relationship="DBISCityModel.FK_UserRrequests_Users" FromRole="Users" ToRole="UserRequests" />
           <NavigationProperty Name="UserRoles" Relationship="DBISCityModel.FK_UserRoles_Users" FromRole="Users" ToRole="UserRoles" />
         </EntityType>
         <Association Name="FK_Accounts_Users">
@@ -293,6 +465,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserRrequests_ManageCompany">
+          <End Type="DBISCityModel.ManageCompany" Role="ManageCompany" Multiplicity="1" />
+          <End Type="DBISCityModel.UserRequests" Role="UserRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManageCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRequests">
+              <PropertyRef Name="mangeCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Users_ManageCompany">
           <End Type="DBISCityModel.ManageCompany" Role="ManageCompany" Multiplicity="0..1" />
           <End Type="DBISCityModel.Users" Role="Users" Multiplicity="*" />
@@ -301,7 +485,19 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Users">
-              <PropertyRef Name="ManageCompany_ID" />
+              <PropertyRef Name="manageCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestsMark_UserRequests">
+          <End Type="DBISCityModel.UserRequests" Role="UserRequests" Multiplicity="1" />
+          <End Type="DBISCityModel.RequestsMark" Role="RequestsMark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRequests">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RequestsMark">
+              <PropertyRef Name="userRequest_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -317,6 +513,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SubCompanyTasks_SubCompany">
+          <End Type="DBISCityModel.SubCompany" Role="SubCompany" Multiplicity="1" />
+          <End Type="DBISCityModel.SubCompanyTasks" Role="SubCompanyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCompany">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubCompanyTasks">
+              <PropertyRef Name="subCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Users_SubCompany">
           <End Type="DBISCityModel.SubCompany" Role="SubCompany" Multiplicity="0..1" />
           <End Type="DBISCityModel.Users" Role="Users" Multiplicity="*" />
@@ -325,7 +533,31 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Users">
-              <PropertyRef Name="SubCompany_ID" />
+              <PropertyRef Name="subCompany_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCompanyTasks_UserRequests">
+          <End Type="DBISCityModel.UserRequests" Role="UserRequests" Multiplicity="1" />
+          <End Type="DBISCityModel.SubCompanyTasks" Role="SubCompanyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRequests">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubCompanyTasks">
+              <PropertyRef Name="userRequest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRrequests_Users">
+          <End Type="DBISCityModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="DBISCityModel.UserRequests" Role="UserRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRequests">
+              <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -347,69 +579,100 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DBISCityModelStoreContainer" CdmEntityContainer="DBISCityEntities">
-    <EntitySetMapping Name="Accounts">
-      <EntityTypeMapping TypeName="IsTypeOf(DBISCityModel.Accounts)">
-        <MappingFragment StoreEntitySet="Accounts">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="password" ColumnName="password" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ManageCompany">
-      <EntityTypeMapping TypeName="IsTypeOf(DBISCityModel.ManageCompany)">
-        <MappingFragment StoreEntitySet="ManageCompany">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="IsTypeOf(DBISCityModel.Roles)">
-        <MappingFragment StoreEntitySet="Roles">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SubCompany">
-      <EntityTypeMapping TypeName="IsTypeOf(DBISCityModel.SubCompany)">
-        <MappingFragment StoreEntitySet="SubCompany">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="mangeCompany_id" ColumnName="mangeCompany_id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserRoles">
-      <EntityTypeMapping TypeName="IsTypeOf(DBISCityModel.UserRoles)">
-        <MappingFragment StoreEntitySet="UserRoles">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="role_id" ColumnName="role_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="IsTypeOf(DBISCityModel.Users)">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="SecondName" ColumnName="SecondName" />
-          <ScalarProperty Name="ThirdName" ColumnName="ThirdName" />
-          <ScalarProperty Name="Street" ColumnName="Street" />
-          <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
-          <ScalarProperty Name="KorpusNumber" ColumnName="KorpusNumber" />
-          <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="EmailConfirm" ColumnName="EmailConfirm" />
-          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
-          <ScalarProperty Name="ManageCompany_ID" ColumnName="ManageCompany_ID" />
-          <ScalarProperty Name="SubCompany_ID" ColumnName="SubCompany_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-  </EntityContainerMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="DBISCityModel.Accounts">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ManageCompany">
+            <EntityTypeMapping TypeName="DBISCityModel.ManageCompany">
+              <MappingFragment StoreEntitySet="ManageCompany">
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestsMark">
+            <EntityTypeMapping TypeName="DBISCityModel.RequestsMark">
+              <MappingFragment StoreEntitySet="RequestsMark">
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
+                <ScalarProperty Name="userRequest_id" ColumnName="userRequest_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DBISCityModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCompany">
+            <EntityTypeMapping TypeName="DBISCityModel.SubCompany">
+              <MappingFragment StoreEntitySet="SubCompany">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="mangeCompany_id" ColumnName="mangeCompany_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCompanyTasks">
+            <EntityTypeMapping TypeName="DBISCityModel.SubCompanyTasks">
+              <MappingFragment StoreEntitySet="SubCompanyTasks">
+                <ScalarProperty Name="userRequest_id" ColumnName="userRequest_id" />
+                <ScalarProperty Name="subCompany_id" ColumnName="subCompany_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRequests">
+            <EntityTypeMapping TypeName="DBISCityModel.UserRequests">
+              <MappingFragment StoreEntitySet="UserRequests">
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+                <ScalarProperty Name="DateOfCreate" ColumnName="DateOfCreate" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="mangeCompany_id" ColumnName="mangeCompany_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="DBISCityModel.UserRoles">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DBISCityModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="EmailConfirm" ColumnName="EmailConfirm" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
+                <ScalarProperty Name="KorpusNumber" ColumnName="KorpusNumber" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="ThirdName" ColumnName="ThirdName" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="subCompany_id" ColumnName="subCompany_id" />
+                <ScalarProperty Name="manageCompany_id" ColumnName="manageCompany_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->

@@ -158,7 +158,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\OrganizationController.cs" />
+    <Compile Include="Controllers\ManageCompanyController.cs" />
+    <Compile Include="Controllers\SubCompanyController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -186,10 +187,19 @@
       <DependentUpon>DBISCityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyRoleAtribute.cs" />
+    <Compile Include="Models\RequestsMark.cs">
+      <DependentUpon>DBISCityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Roles.cs">
       <DependentUpon>DBISCityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SubCompany.cs">
+      <DependentUpon>DBISCityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SubCompanyTasks.cs">
+      <DependentUpon>DBISCityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRequests.cs">
       <DependentUpon>DBISCityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRoles.cs">
@@ -214,8 +224,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contacts.cshtml" />
-    <Content Include="Views\Organization\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\ManageCompany\Index.cshtml" />
+    <Content Include="Views\SubCompany\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

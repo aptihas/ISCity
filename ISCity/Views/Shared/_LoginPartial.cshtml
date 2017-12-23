@@ -21,10 +21,16 @@
                     @Html.ActionLink("Панель администратора", "Index", "Admin", routeValues: null, htmlAttributes: new { title = "Manage" })
                 </li>
             }
-            @if (userRoles.Contains("Organization"))
+            @if (userRoles.Contains("ManageCompany"))
             {
                 <li>
-                    @Html.ActionLink("Панель организации", "Index", "Organization", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    @Html.ActionLink("Панель ресурсоснабжающей компании", "Index", "ManageCompany", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+            }
+            @if (userRoles.Contains("SubCompany"))
+            {
+                <li>
+                    @Html.ActionLink("Панель управляющей компании", "Index", "SubCompany", routeValues: null, htmlAttributes: new { title = "Manage" })
                 </li>
             }
             @if (userRoles.Contains("User"))

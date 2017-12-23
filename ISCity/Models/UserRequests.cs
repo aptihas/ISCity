@@ -12,37 +12,27 @@ namespace ISCity.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class UserRequests
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public UserRequests()
         {
-            this.Accounts = new HashSet<Accounts>();
-            this.UserRequests = new HashSet<UserRequests>();
-            this.UserRoles = new HashSet<UserRoles>();
+            this.RequestsMark = new HashSet<RequestsMark>();
+            this.SubCompanyTasks = new HashSet<SubCompanyTasks>();
         }
     
         public int id { get; set; }
-        public Nullable<int> manageCompany_id { get; set; }
-        public Nullable<int> subCompany_id { get; set; }
-        public string FirstName { get; set; }
-        public string SecondName { get; set; }
-        public string ThirdName { get; set; }
-        public string Street { get; set; }
-        public string HouseNumber { get; set; }
-        public string KorpusNumber { get; set; }
-        public string RoomNumber { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirm { get; set; }
-        public string Telephone { get; set; }
+        public int user_id { get; set; }
+        public int mangeCompany_id { get; set; }
+        public string Message { get; set; }
+        public System.DateTime DateOfCreate { get; set; }
+        public bool Closed { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Accounts> Accounts { get; set; }
         public virtual ManageCompany ManageCompany { get; set; }
-        public virtual SubCompany SubCompany { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRequests> UserRequests { get; set; }
+        public virtual ICollection<RequestsMark> RequestsMark { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRoles> UserRoles { get; set; }
+        public virtual ICollection<SubCompanyTasks> SubCompanyTasks { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

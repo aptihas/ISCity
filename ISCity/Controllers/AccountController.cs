@@ -45,7 +45,18 @@ namespace ISCity.Controllers
                         _usr.EmailConfirm = true;
                         dbEnt.SaveChanges();
                     }
-                    return RedirectToAction("Index", "User");
+                    if (_usr.mc_user_id != null)
+                    {
+                        return RedirectToAction("Index", "User");
+                    }
+                    else if(_usr.sc_user_id!=null)
+                    {
+                        return RedirectToAction("Index", "User");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "User");
+                    }
                 }
                 else
                 {

@@ -18,14 +18,18 @@ namespace ISCity.Models
         public ManageCompany()
         {
             this.SubCompany = new HashSet<SubCompany>();
+            this.UserRequests = new HashSet<UserRequests>();
             this.Users = new HashSet<Users>();
         }
     
         public int id { get; set; }
         public string Name { get; set; }
+        public string Category { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubCompany> SubCompany { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRequests> UserRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Users> Users { get; set; }
     }

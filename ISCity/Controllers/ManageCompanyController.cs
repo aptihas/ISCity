@@ -1,5 +1,4 @@
-﻿using ISCity.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,10 +6,9 @@ using System.Web.Mvc;
 
 namespace ISCity.Controllers
 {
-    [MyRoleAtribute(Roles = "Organization")]
-    public class OrganizationController : Controller
+    public class ManageCompanyController : Controller
     {
-        // GET: Organization
+        // GET: ManageCompany
         public ActionResult Index()
         {
             return View();

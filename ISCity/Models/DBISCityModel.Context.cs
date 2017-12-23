@@ -27,8 +27,11 @@ namespace ISCity.Models
     
         public virtual DbSet<Accounts> Accounts { get; set; }
         public virtual DbSet<ManageCompany> ManageCompany { get; set; }
+        public virtual DbSet<RequestsMark> RequestsMark { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<SubCompany> SubCompany { get; set; }
+        public virtual DbSet<SubCompanyTasks> SubCompanyTasks { get; set; }
+        public virtual DbSet<UserRequests> UserRequests { get; set; }
         public virtual DbSet<UserRoles> UserRoles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }
