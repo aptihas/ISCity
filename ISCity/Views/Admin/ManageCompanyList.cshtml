@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ISCity.Models.ManageCompany>
+
+@{
+    ViewBag.Title = "Список ресурсоснабжающих организаций";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int number = 1;
+}
+
+<h2>Список ресурсоснабжающих организаций</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            №
+        </th>
+        <th>
+            Наименование
+        </th>
+        <th>
+            Категория
+        </th>
+        <th>
+            Адрес
+        </th>
+        <th>
+            Отвественный
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @number
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Street), @Html.DisplayFor(modelItem => item.HouseNumber)
+        </td>
+        <td>
+            @item.Users.FirstOrDefault().FirstName @item.Users.FirstOrDefault().SecondName
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "EditManageCompany", new { id=item.id })
+        </td>
+    </tr>
+    number++;
+}
+</table>

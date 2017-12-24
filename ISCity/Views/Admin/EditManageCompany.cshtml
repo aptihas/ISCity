@@ -1,18 +1,24 @@
 ﻿@model ISCity.Models.ManageCompanyModel
 
 @{
-    ViewBag.Title = "Добавление ресурсоснабжающей организации";
+    ViewBag.Title = "Изменить данные ресурсоснабжающей компании";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Добавление ресурсоснабжающей организации</h2>
+<h2>Изменить данные ресурсоснабжающей компании</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
+    int usr_id = ViewBag.UserID;
+    int mc_id=ViewBag.MCID;
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
         <hr />
+
+        @Html.Hidden("user_id", usr_id)
+        @Html.Hidden("mc_id", mc_id)
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -80,7 +86,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>

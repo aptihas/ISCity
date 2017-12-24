@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ISCity.Models.UserRequests>
+
+@{
+    ViewBag.Title = "Список полученных заявок";
+    Layout = "~/Views/Shared/_LayoutMC.cshtml";
+    int number = 1;
+}
+
+<h2>Список полученных заявок</h2>
+
+<table class="table">
+    <tr>
+        <th>№</th>
+        <th>
+            ФИО заявителя
+        </th>
+        <th>
+            Адрес заявителя
+        </th>
+        <th>
+            Текст заявки
+        </th>
+        <th>
+            Управляющая компания
+        </th>
+        <th>
+            Дата получения
+        </th>
+        <th>
+            Статус
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    string fio = item.Users.FirstName + " " + item.Users.SecondName + " " + (item.Users.ThirdName??"");
+    string adress = item.Users.Street + " " + item.Users.HouseNumber  + (item.Users.KorpusNumber!=null ? " корпус "+ item.Users.KorpusNumber:"") + (item.Users.RoomNumber != null ? " квартира " + item.Users.RoomNumber : "");
+    string _status = item.Closed ? "Заявка закрыта" : "Заявка открыта";
+    string text = string.Join(" ", item.Message.Split(' ').Take(5));
+    string subCompany = item.subCompany_id != null ? item.SubCompany.Name : "Еще не назначена";
+    <tr>
+        <td>@number</td>
+        <td>
+            @fio 
+        </td>
+        <td>
+            @adress
+        </td>
+        <td>
+            @text ...
+        </td>
+        <td>
+            @subCompany
+        </td>
+        <td>
+            @item.DateOfCreate.ToShortDateString()
+        </td>
+        <td>
+            @_status
+        </td>
+
+        <td>
+            @Html.ActionLink("Подробнее", "DetailsRequest", new { id=item.id })<br />
+
+            @if (item.subCompany_id == null)
+            {
+                @Html.ActionLink("Назначить управляющую компанию", "ConsolidateSubCompany", new { id = item.id })
+            }
+        </td>
+    </tr>
+    number++;
+}
+
+</table>

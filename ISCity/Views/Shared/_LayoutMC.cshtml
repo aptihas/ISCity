@@ -28,8 +28,9 @@
     <div class="container body-content">
         <ul>
             <li>@Html.ActionLink("Панель ресурсоснабжающей организации", "Index", "ManageCompany")</li>
-            <li>@Html.ActionLink("Панель ресурсоснабжающей организации", "Index", "ManageCompany")</li>
-            <li>@Html.ActionLink("Панель ресурсоснабжающей организации", "Index", "ManageCompany")</li>
+            <li>@Html.ActionLink("Список полученных заявок", "RequestList", "ManageCompany")</li>
+            <li>@Html.ActionLink("Добавить управляющую компанию", "AddSubCompany", "ManageCompany")</li>
+            <li>@Html.ActionLink("Список дочерних управляющих компаний", "SubCompanyList", "ManageCompany")</li>
         </ul>
         @RenderBody()
         <hr />

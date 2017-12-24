@@ -1,0 +1,66 @@
+﻿@model ISCity.Models.UserRequests
+
+@{
+    ViewBag.Title = "Подробнее о заявке";
+    Layout = "~/Views/Shared/_LayoutMC.cshtml";
+
+    string fio = Model.Users.FirstName + " " + Model.Users.SecondName + " " + (Model.Users.ThirdName ?? "");
+    string adress = Model.Users.Street + " " + Model.Users.HouseNumber + (Model.Users.KorpusNumber != null ? " корпус " + Model.Users.KorpusNumber : "") + (Model.Users.RoomNumber != null ? " квартира " + Model.Users.RoomNumber : "");
+    string _status = Model.Closed ? "Заявка закрыта" : "Заявка открыта";
+    string text = string.Join(" ", Model.Message.Split(' ').Take(5));
+    string subCompany = Model.subCompany_id != null ? Model.SubCompany.Name : "Еще не назначена";
+
+}
+
+<h2>Заявка от @Model.DateOfCreate.ToShortDateString() № @Model.id</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            ФИО заявителя
+        </dt>
+
+        <dd>
+            @fio
+        </dd>
+
+        <dt>
+            Адрес заявителя
+        </dt>
+
+        <dd>
+            @adress
+        </dd>
+        <dt>
+            Текст заявки
+        </dt>
+
+        <dd>
+            @Model.Message
+        </dd>
+        <dt>
+            Урпавляющая компания
+        </dt>
+
+        <dd>
+            @subCompany
+        </dd>
+
+        <dt>
+            Статус
+        </dt>
+
+        <dd>
+            @_status
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (Model.subCompany_id == null)
+    {
+        @Html.ActionLink("Назначить управляющую компанию", "ConsolidateSubCompany", new { id = Model.id }) 
+    }
+    <br />@Html.ActionLink("Назад к списку", "RequestList")
+</p>

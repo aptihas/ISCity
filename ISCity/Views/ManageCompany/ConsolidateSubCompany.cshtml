@@ -1,0 +1,43 @@
+﻿@model ISCity.Models.UserRequests
+@{
+    ViewBag.Title = "ConsolidateSubCompany";
+    Layout = "~/Views/Shared/_LayoutMC.cshtml";
+
+    ISCity.Models.DBISCityEntities dbEnt = new ISCity.Models.DBISCityEntities();
+
+    var _subCompanies = dbEnt.SubCompany.Select(m => m);
+    SelectList _subCompaniesList = new SelectList(_subCompanies, "id", "Name");
+    string fio = Model.Users.FirstName + " " + Model.Users.SecondName + " " + (Model.Users.ThirdName ?? "");
+    string adress = Model.Users.Street + " " + Model.Users.HouseNumber + (Model.Users.KorpusNumber != null ? " корпус " + Model.Users.KorpusNumber : "") + (Model.Users.RoomNumber != null ? " квартира " + Model.Users.RoomNumber : "");
+
+}
+
+<h2>Назначить / изменить управляющую компанию</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Заявка от @Model.DateOfCreate.ToShortDateString() № @Model.id </h4>
+        <h4>Заявитель @fio </h4>
+        <h4>Адрес заявителя @adress </h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("id_request", Model.id)
+        <div class="form-group">
+            <label class = "control-label col-md-2">Выбор управляющей компании для закрепления за заявкой</label>
+            <div class="col-md-10">
+                @Html.DropDownList("subCompany_id", _subCompaniesList)
+                @Html.ValidationMessage("subCompany_id", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Закрепить управляющую компанию" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
