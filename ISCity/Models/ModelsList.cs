@@ -96,4 +96,36 @@ namespace ISCity.Models
         public int Category { get; set; }
         public string Message { get; set; }
     }
+
+
+    public class SubCompanyModel
+    {
+        [Required(ErrorMessage = "Введите Фамилию ответственного лица")]
+        [Display(Name = "Фамилия")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Введите Фамилию ответственного лица")]
+        [Display(Name = "Имя")]
+        public string SecondName { get; set; }
+
+        [Display(Name = "Отчество")]
+        public string ThirdName { get; set; }
+
+        [Required(ErrorMessage = "Введите Email ответственного лица")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес")]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Введите наименвание ресурсоснабжающей компании")]
+        [Display(Name = "Наименование организации")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Введите улицу организации.")]
+        [Display(Name = "Улица")]
+        public string Street { get; set; }
+
+        [Required(ErrorMessage = "Введите номер здания организации.")]
+        [Display(Name = "Дом")]
+        public string HouseNumber { get; set; }
+    }
 }

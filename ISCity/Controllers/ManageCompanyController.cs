@@ -11,6 +11,7 @@ namespace ISCity.Controllers
     [MyRoleAtribute(Roles = "ManageCompany")]
     public class ManageCompanyController : Controller
     {
+        Random rnd = new Random();
         DBISCityEntities dbEnt = new DBISCityEntities();
         // GET: ManageCompany
         public ActionResult Index()
@@ -55,12 +56,45 @@ namespace ISCity.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddSubCompany(SubCompany sc)
+        public ActionResult AddSubCompany(SubCompanyModel sc)
         {
-            var _acc = (from a in dbEnt.Accounts where a.Users.Email == User.Identity.Name select a.Users).FirstOrDefault();
-            dbEnt.SubCompany.Add(new SubCompany { mangeCompany_id= (int)_acc.manageCompany_id, Name=sc.Name, Street=sc.Street, HouseNumber=sc.HouseNumber });
-            dbEnt.SaveChanges();
-            return RedirectToAction("SubCompanyList");
+            var emailList = dbEnt.Users.Select(s => s.Email);
+            var nameList = dbEnt.SubCompany.Select(s => s.Name);
+            if (!emailList.Contains(sc.Email) && !nameList.Contains(sc.Name))
+            {
+                SubCompany _scObj = new SubCompany { Name = sc.Name, Street = sc.Street, HouseNumber = sc.HouseNumber };
+                dbEnt.SubCompany.Add(_scObj);
+                dbEnt.SaveChanges();
+
+                Users _usrObj = new Users { FirstName = sc.FirstName, SecondName = sc.SecondName, ThirdName = sc.ThirdName, Email = sc.Email, EmailConfirm = false, subCompany_id = _scObj.id };
+                dbEnt.Users.Add(_usrObj);
+                dbEnt.SaveChanges();
+
+                var roleList = dbEnt.Roles.Select(r => r.Name);
+                Roles _rlobj;
+                if (!roleList.Contains("SubCompany"))
+                {
+                    _rlobj = new Roles { Name = "SubCompany" };
+                    dbEnt.Roles.Add(_rlobj);
+                    dbEnt.SaveChanges();
+                }
+                else
+                {
+                    _rlobj = dbEnt.Roles.Where(r => r.Name == "SubCompany").Select(r => r).FirstOrDefault();
+                }
+
+                dbEnt.Accounts.Add(new Accounts { user_id = _usrObj.id, password = ISCityFramework.GetPass(rnd) });
+                dbEnt.SaveChanges();
+
+                dbEnt.UserRoles.Add(new UserRoles { user_id = _usrObj.id, role_id = _rlobj.id });
+                dbEnt.SaveChanges();
+
+                ISCityFramework.SendMail(_usrObj, dbEnt);
+                return RedirectToAction("SubCompanyList");
+            }
+
+            ModelState.AddModelError("", "Управляющая коомпания с таким Наименованием или Email уже существует.");
+            return View(sc);
         }
 
         public ActionResult SubCompanyList()

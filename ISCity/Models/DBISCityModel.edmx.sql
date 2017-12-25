@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/23/2017 13:06:23
--- Generated from EDMX file: C:\Users\macbookpro\documents\visual studio 2017\Projects\ISCity\ISCity\Models\DBISCityModel.edmx
+-- Date Created: 12/25/2017 09:42:02
+-- Generated from EDMX file: C:\Users\OrsisPC\Source\Repos\ISCity\ISCity\Models\DBISCityModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -26,11 +26,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_SubCompany_ManageCompany]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SubCompany] DROP CONSTRAINT [FK_SubCompany_ManageCompany];
 GO
-IF OBJECT_ID(N'[dbo].[FK_SubCompanyTasks_SubCompany]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SubCompanyTasks] DROP CONSTRAINT [FK_SubCompanyTasks_SubCompany];
-GO
-IF OBJECT_ID(N'[dbo].[FK_SubCompanyTasks_UserRequests]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SubCompanyTasks] DROP CONSTRAINT [FK_SubCompanyTasks_UserRequests];
+IF OBJECT_ID(N'[dbo].[FK_UserRequests_SubCompany]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRequests] DROP CONSTRAINT [FK_UserRequests_SubCompany];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserRoles_Roles]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserRoles] DROP CONSTRAINT [FK_UserRoles_Roles];
@@ -69,9 +66,6 @@ IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[SubCompany]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SubCompany];
-GO
-IF OBJECT_ID(N'[dbo].[SubCompanyTasks]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SubCompanyTasks];
 GO
 IF OBJECT_ID(N'[dbo].[UserRequests]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserRequests];
@@ -130,19 +124,12 @@ CREATE TABLE [dbo].[SubCompany] (
 );
 GO
 
--- Creating table 'SubCompanyTasks'
-CREATE TABLE [dbo].[SubCompanyTasks] (
-    [id] int IDENTITY(1,1) NOT NULL,
-    [subCompany_id] int  NOT NULL,
-    [userRequest_id] int  NOT NULL
-);
-GO
-
 -- Creating table 'UserRequests'
 CREATE TABLE [dbo].[UserRequests] (
     [id] int IDENTITY(1,1) NOT NULL,
     [user_id] int  NOT NULL,
     [mangeCompany_id] int  NOT NULL,
+    [subCompany_id] int  NULL,
     [Message] nvarchar(500)  NOT NULL,
     [DateOfCreate] datetime  NOT NULL,
     [Closed] bit  NOT NULL
@@ -206,12 +193,6 @@ GO
 -- Creating primary key on [id] in table 'SubCompany'
 ALTER TABLE [dbo].[SubCompany]
 ADD CONSTRAINT [PK_SubCompany]
-    PRIMARY KEY CLUSTERED ([id] ASC);
-GO
-
--- Creating primary key on [id] in table 'SubCompanyTasks'
-ALTER TABLE [dbo].[SubCompanyTasks]
-ADD CONSTRAINT [PK_SubCompanyTasks]
     PRIMARY KEY CLUSTERED ([id] ASC);
 GO
 
@@ -327,18 +308,18 @@ ON [dbo].[UserRoles]
     ([role_id]);
 GO
 
--- Creating foreign key on [subCompany_id] in table 'SubCompanyTasks'
-ALTER TABLE [dbo].[SubCompanyTasks]
-ADD CONSTRAINT [FK_SubCompanyTasks_SubCompany]
+-- Creating foreign key on [subCompany_id] in table 'UserRequests'
+ALTER TABLE [dbo].[UserRequests]
+ADD CONSTRAINT [FK_UserRequests_SubCompany]
     FOREIGN KEY ([subCompany_id])
     REFERENCES [dbo].[SubCompany]
         ([id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_SubCompanyTasks_SubCompany'
-CREATE INDEX [IX_FK_SubCompanyTasks_SubCompany]
-ON [dbo].[SubCompanyTasks]
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserRequests_SubCompany'
+CREATE INDEX [IX_FK_UserRequests_SubCompany]
+ON [dbo].[UserRequests]
     ([subCompany_id]);
 GO
 
@@ -355,21 +336,6 @@ GO
 CREATE INDEX [IX_FK_Users_SubCompany]
 ON [dbo].[Users]
     ([subCompany_id]);
-GO
-
--- Creating foreign key on [userRequest_id] in table 'SubCompanyTasks'
-ALTER TABLE [dbo].[SubCompanyTasks]
-ADD CONSTRAINT [FK_SubCompanyTasks_UserRequests]
-    FOREIGN KEY ([userRequest_id])
-    REFERENCES [dbo].[UserRequests]
-        ([id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_SubCompanyTasks_UserRequests'
-CREATE INDEX [IX_FK_SubCompanyTasks_UserRequests]
-ON [dbo].[SubCompanyTasks]
-    ([userRequest_id]);
 GO
 
 -- Creating foreign key on [user_id] in table 'UserRequests'
