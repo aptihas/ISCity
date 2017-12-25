@@ -62,7 +62,9 @@ namespace ISCity.Controllers
             var nameList = dbEnt.SubCompany.Select(s => s.Name);
             if (!emailList.Contains(sc.Email) && !nameList.Contains(sc.Name))
             {
-                SubCompany _scObj = new SubCompany { Name = sc.Name, Street = sc.Street, HouseNumber = sc.HouseNumber };
+                var _acc = (from a in dbEnt.Accounts where a.Users.Email == User.Identity.Name select a.Users).FirstOrDefault();
+
+                SubCompany _scObj = new SubCompany { Name = sc.Name, Street = sc.Street, HouseNumber = sc.HouseNumber, mangeCompany_id=(int)_acc.manageCompany_id };
                 dbEnt.SubCompany.Add(_scObj);
                 dbEnt.SaveChanges();
 
@@ -106,17 +108,26 @@ namespace ISCity.Controllers
         public ActionResult EditSubCompany(int id)
         {
             var sc = dbEnt.SubCompany.Where(s => s.id == id).Select(s => s).FirstOrDefault();
-
-            return View(sc);
+            var usr = dbEnt.Users.Where(u => u.subCompany_id == id).Select(u => u).FirstOrDefault();
+            SubCompanyModel msm = new SubCompanyModel {Email = usr.Email, FirstName = usr.FirstName, HouseNumber = sc.HouseNumber, Name = sc.Name, SecondName = usr.SecondName, Street = sc.Street, ThirdName = usr.ThirdName };
+            return View(msm);
         }
 
         [HttpPost]
-        public ActionResult EditSubCompany(SubCompany _sc)
+        public ActionResult EditSubCompany(SubCompanyModel _sc, int user_id, int sc_id)
         {
-            var sc = dbEnt.SubCompany.Where(s => s.id == _sc.id).Select(s => s).FirstOrDefault();
+            var sc = dbEnt.SubCompany.Where(s => s.id == user_id).Select(s => s).FirstOrDefault();
+            var usr = dbEnt.Users.Where(u => u.subCompany_id == sc_id).Select(u => u).FirstOrDefault();
+
             sc.Name = _sc.Name;
             sc.Street = _sc.Street;
             sc.HouseNumber = _sc.HouseNumber;
+
+            usr.Email = _sc.Email;
+            usr.FirstName = _sc.FirstName;
+            usr.SecondName = _sc.SecondName;
+            usr.ThirdName = _sc.ThirdName;
+
             dbEnt.SaveChanges();
 
             return RedirectToAction("SubCompanyList");

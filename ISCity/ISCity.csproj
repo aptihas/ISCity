@@ -237,10 +237,10 @@
     <Content Include="Views\ManageCompany\DetailsRequest.cshtml" />
     <Content Include="Views\ManageCompany\ConsolidateSubCompany.cshtml" />
     <Content Include="Views\ManageCompany\SubCompanyList.cshtml" />
-    <Content Include="Views\ManageCompany\EditSubCompany.cshtml" />
     <Content Include="Views\Admin\ManageCompanyList.cshtml" />
     <Content Include="Views\Admin\EditManageCompany.cshtml" />
     <Content Include="Views\ManageCompany\AddSubCompany.cshtml" />
+    <Content Include="Views\ManageCompany\EditSubCompany.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
